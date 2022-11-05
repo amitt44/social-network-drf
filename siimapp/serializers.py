@@ -34,18 +34,3 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields  = ['id', 'title', 'description', 'image']
 
-    def create(self, validated_data):
-        user = self.context['request'].id
-        title  = validated_data['title']
-        description = validated_data['description']
-        user = User.objects.filter(id=user).first()
-        post_create = Post.objects.create(user=user, title=title, description=description)
-        post_create.save()
-        return post_create
-
-
-    def update(self, instance, validated_data):
-        instance.title = validated_data.get('title', instance.title)
-        instance.description = validated_data.get('description', instance.description)
-        instance.save()
-        return instance
